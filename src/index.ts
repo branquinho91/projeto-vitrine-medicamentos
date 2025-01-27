@@ -1,8 +1,10 @@
 import "reflect-metadata";
 import express from "express";
 import cors from "cors";
-
 import { AppDataSource } from "./database/data-source";
+// import userRoutes from "./routes/user.routes";
+// import medicineRoutes from "./routes/medicine.routes";
+// import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
