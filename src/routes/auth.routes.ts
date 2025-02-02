@@ -25,7 +25,7 @@ authRouter.post("/", async (req: Request, res: Response): Promise<void> => {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (isPasswordCorrect) {
-      res.status(200).json("123");
+      res.status(200).json({ userId: user.id });
     } else {
       res.status(401).json({ error: "Usuário e/ou Senha incorreta!" });
     }

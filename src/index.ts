@@ -4,7 +4,7 @@ import cors from "cors";
 import { AppDataSource } from "./database/data-source";
 import userRouter from "./routes/user.routes";
 import authRouter from "./routes/auth.routes";
-// import medicineRoutes from "./routes/medicine.routes";
+import medicineRouter from "./routes/medicine.routes";
 
 const app = express();
 
@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/login", authRouter);
+app.use("/medicines", medicineRouter);
 
 AppDataSource.initialize()
   .then(async () => {

@@ -21,6 +21,9 @@ class Medicine {
   @Column({ type: "int", nullable: false })
   quantity: number;
 
+  @Column({ type: "int", nullable: false })
+  userId: number;
+
   @OneToOne(() => User)
   @JoinColumn({ name: "userId" })
   user: User;
