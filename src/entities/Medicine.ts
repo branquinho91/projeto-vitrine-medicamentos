@@ -12,18 +12,18 @@ class Medicine {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ type: "varchar", length: 255, nullable: false })
   name: string;
 
-  @Column()
-  description: string;
+  @Column({ type: "text", nullable: true })
+  description?: string;
 
-  @Column({ nullable: false })
+  @Column({ type: "int", nullable: false })
   quantity: number;
 
   @OneToOne(() => User)
-  @JoinColumn()
-  userId: User;
+  @JoinColumn({ name: "userId" })
+  user: User;
 }
 
 export default Medicine;
