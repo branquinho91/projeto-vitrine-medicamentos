@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index",
-    "migration:run": "npx typeorm-ts-node-commonjs -d ./src/database/data-source.ts migration:run"
+    "migration:run": "npx typeorm-ts-node-commonjs -d ./src/database/data-source.ts migration:run",
+    "migration:revert": "npx typeorm-ts-node-commonjs -d ./src/database/data-source.ts migration:revert"
   },
   "keywords": [],
   "author": "",

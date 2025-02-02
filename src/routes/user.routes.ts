@@ -1,59 +1,34 @@
 import { Router, Request, Response } from "express";
 import { AppDataSource } from "../database/data-source";
+import bcrypt from "bcrypt";
 import User from "../entities/User";
-// import bcrypt from "bcrypt";
 
-const userRoutes = Router();
-
+const userRouter = Router();
 const userRepository = AppDataSource.getRepository(User);
 
-userRoutes.post(
-  "/users",
-  async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { name, email, password } = req.body;
+userRouter.post("/", async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { name, email, password } = req.body;
 
-      if (!name || !email || !password) {
-        res.status(400).json({ error: "Preencha todos os campos" });
-        return;
-      }
-
-      const user = userRepository.create({ name, email, password });
-
-      await userRepository.save(user);
-
-      res.json(user);
-    } catch {
-      res.status(500).json("Erro ao salvar usuário");
+    if (!name || !email || !password) {
+      res.status(400).json({ error: "Preencha todos os campos" });
+      return;
     }
-  },
-);
 
-userRoutes.post(
-  "/login",
-  async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { email, password } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-      const user = await userRepository.findOne({ email });
+    const user = userRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
-      if (!user) {
-        res.status(404).json({ error: "Usuário não encontrado" });
-        return;
-      }
+    await userRepository.save(user);
+    res.status(201).json(user);
+  } catch {
+    res.status(500).json({ error: "Erro ao salvar usuário" });
+  }
+});
 
-      // const isValidPassword = await bcrypt.compare(password, user.password);
-
-      // if (!isValidPassword) {
-      //   res.status(401).json({ error: "Senha inválida" });
-      //   return;
-      // }
-
-      res.json(user);
-    } catch {
-      res.status(500).json("Erro ao fazer login");
-    }
-  },
-);
-
-export default userRoutes;
+export default userRouter;

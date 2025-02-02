@@ -8,8 +8,10 @@ export class UsersTable1738010603661 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "serial",
+            type: "int",
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: "increment",
           },
           {
             name: "name",
@@ -25,6 +27,7 @@ export class UsersTable1738010603661 implements MigrationInterface {
           },
         ],
       }),
+      true,
     );
   }
 
